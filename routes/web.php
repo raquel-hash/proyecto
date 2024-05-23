@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 /**
 Route::get('/', [PageController::class, 'home'])->name('home');
 
 Route::get('blog', [PageController::class, 'blog'])->name('blog');
 
 Route::get('blog/{slug}', [PageController::class, 'post'])->name('post');
-*/
+ */
 
 Route::controller(PageController::class)->group(function () {
     Route::get('/',                'home')->name('home');
@@ -31,4 +33,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::resource('posts', PostController::class)->except(['show']);
+
+require __DIR__ . '/auth.php';
